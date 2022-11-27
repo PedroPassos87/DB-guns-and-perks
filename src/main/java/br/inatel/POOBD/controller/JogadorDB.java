@@ -12,12 +12,12 @@ public class JogadorDB extends Database{
     //inserindo
     public boolean insertJogador(Jogador jogador){
         connect();
-        String sql = "INSERT INTO jogador(nick,xp) VALUES (?,?)";
+        String sql = "INSERT INTO jogador(nick,tag) VALUES (?,?)";
         try{
 
             pst = connection.prepareStatement(sql);
             pst.setString(1,jogador.nick);
-            pst.setInt(2, jogador.xp);
+            pst.setInt(2, jogador.tag);
             pst.execute();
             check = true;
 
@@ -47,12 +47,12 @@ public class JogadorDB extends Database{
             result = statement.executeQuery(sql);
 
             while (result.next()){
-                Jogador jogadorTemp = new Jogador(result.getString("nick"),result.getInt("xp"));
+                Jogador jogadorTemp = new Jogador(result.getString("nick"),result.getInt("tag"));
                 jogadorTemp.id = result.getInt("id");
 
                 System.out.println("ID = "+ jogadorTemp.id);
                 System.out.println("Nick = "+jogadorTemp.nick);
-                System.out.println("Nivel = "+jogadorTemp.xp);
+                System.out.println("Nivel = "+jogadorTemp.tag);
                 System.out.println("---------------------------------------");
                 jogadores.add(jogadorTemp);
             }
@@ -71,14 +71,14 @@ public class JogadorDB extends Database{
     }
 
     //atualizando registro
-    public boolean updateJogador(int id, String nick,int xp){
+    public boolean updateJogador(String nick,int tag){
         connect();
-        String sql = "UPDATE jogador SET nick=?,xp=? where id=?";
+        String sql = "UPDATE jogador SET nick=? where tag=?";
         try {
             pst = connection.prepareStatement(sql);
             pst.setString(1,nick);
-            pst.setInt(2,xp);
-            pst.setInt(3,id);
+            pst.setInt(2,tag);
+
             pst.execute();
             check = true;
         }catch (SQLException e){
@@ -97,12 +97,12 @@ public class JogadorDB extends Database{
     }
 
     //deletar
-    public boolean deleteJogador(int id){
+    public boolean deleteJogador(int tag){
         connect();
-        String sql = "DELETE FROM jogador WHERE id=?";
+        String sql = "DELETE FROM jogador WHERE tag=?";
         try {
             pst = connection.prepareStatement(sql);
-            pst.setInt(1,id);
+            pst.setInt(1,tag);
             pst.execute();
             check = true;
         }catch (SQLException e){
