@@ -19,7 +19,7 @@ public class Principal {
         Scanner u = new Scanner(System.in);
         int i = 0;
 
-
+//mscirl
         do {
 
             System.out.println("Crie seu personagem");
