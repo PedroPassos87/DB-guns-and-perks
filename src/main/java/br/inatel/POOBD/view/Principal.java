@@ -1,5 +1,6 @@
 package br.inatel.POOBD.view;
 
+import br.inatel.POOBD.controller.ArmaDB;
 import br.inatel.POOBD.controller.CofreDB;
 import br.inatel.POOBD.controller.JogadorDB;
 import br.inatel.POOBD.model.Cofre;
@@ -11,10 +12,13 @@ public class Principal {
     public static void main(String[] args) {
 
         //objetos de manipulaçao BD
-        Cofre [] cofre= new Cofre[5];
-        CofreDB cofreDB = new CofreDB();
-        Jogador [] jogador = new Jogador[5];
         JogadorDB jogadorDB = new JogadorDB();
+        CofreDB cofreDB = new CofreDB();
+        ArmaDB armaDB = new ArmaDB();
+
+        Jogador [] jogador = new Jogador[5];
+        Cofre [] cofre= new Cofre[5];
+
 
         int aux;
         Scanner u = new Scanner(System.in);
@@ -51,12 +55,35 @@ public class Principal {
                 cofreDB.insertCofre(cofre[i]);
             }
 
+            else if(aux == 2){
+                //mostrar armas
+                armaDB.researchArma();
+                //usuario escolhe armas
+
+                //colocar a arma no cofre do usuario
+
+            }
+
+            else if(aux == 3){
+                //mudar nick
+
+
+            }
+
+            else if(aux == 4){
+                //deletar personagem
+
+            }
+
+            else{
+                //chamar erro
+            }
+
 
         }while (aux != 0);
 
 
 
-        jogadorDB.researchJogador();
     }
 }
 

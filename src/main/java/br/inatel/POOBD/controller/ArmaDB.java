@@ -55,15 +55,15 @@ public class ArmaDB extends Database{
             while (result.next()){
                 Arma armaTemp = new Arma(result.getInt("id"),result.getString("nome"),
                         result.getString("tipoArma"),result.getString("tipoMunicao"),
-                        result.getInt("ammocapacity"),result.getInt("perk_id"));
+                        result.getInt("ammocapacity"));
 
 
                 System.out.println("Arma = "+armaTemp.nome);
-                System.out.println("Tipo = "+armaTemp.tipoArma);
                 System.out.println("Numero da arma = "+ armaTemp.id);
+                System.out.println("Tipo = "+armaTemp.tipoArma);
                 System.out.println("Municao = "+ armaTemp.tipoMunicao);
                 System.out.println("Maximo de municao = "+armaTemp.ammocapacity);
-
+                System.out.println("-------------------------------------------");
                 armas.add(armaTemp);
             }
         }catch (SQLException e){
