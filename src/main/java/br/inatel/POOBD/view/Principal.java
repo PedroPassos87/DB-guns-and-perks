@@ -51,16 +51,27 @@ public class Principal {
                 System.out.println("Insira a senha do seu cofre: ");
                 String senha = u.next();
                 //criando o cofre dele
-                cofre[i] = new Cofre(capacidade,senha,jogador[i].id);
+                cofre[i] = new Cofre(senha,jogador[i].id);
                 cofreDB.insertCofre(cofre[i]);
             }
 
             else if(aux == 2){
+                //insira a senha do seu cofre
+                String valid = u.next();
+
+                //validando senha
+
                 //mostrar armas
                 armaDB.researchArma();
+
                 //usuario escolhe armas
+                int escolha = u.nextInt();
+
+                //tratar o erro da escolha. Ser diferente de um id de arma
+
 
                 //colocar a arma no cofre do usuario
+
 
             }
 

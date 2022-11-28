@@ -49,7 +49,7 @@ public class CofreDB extends Database {
             result = statement.executeQuery(sql);
 
             while (result.next()){
-                Cofre cofreTemp = new Cofre(result.getInt("capacidade"),result.getString("senha"),result.getInt("jogador_id"));
+                Cofre cofreTemp = new Cofre(result.getString("senha"),result.getInt("jogador_id"));
                 cofreTemp.id = result.getInt("id");
 
 
