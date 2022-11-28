@@ -2,7 +2,7 @@ package br.inatel.POOBD.model;
 
 public class Cofre {
     public int id;
-    public int capacidade;
+    public int capacidade ;
     private String senha;
     public int jogador_id ;
 

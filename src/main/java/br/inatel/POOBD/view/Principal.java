@@ -11,27 +11,56 @@ public class Principal {
     public static void main(String[] args) {
 
         //objetos de manipulaçao BD
-        CofreDB [] cofreDB = new CofreDB[5];
+        Cofre [] cofre= new Cofre[5];
+        CofreDB cofreDB = new CofreDB();
         Jogador [] jogador = new Jogador[5];
         JogadorDB jogadorDB = new JogadorDB();
 
-        int aux = 1;
+        int aux;
         Scanner u = new Scanner(System.in);
         int i = 0;
+        int capacidade = 5;
 
-//mscirl
         do {
 
-            System.out.println("Crie seu personagem");
-            String nome = u.next();
-            int nivel = u.nextInt();
+            System.out.println("1 para cadastrar seu personagem");
+            System.out.println("2 para adicionar arma ao seu personagem/cofre");
+            System.out.println("3 para mudar seu nick");
+            System.out.println("4 para deletar um personagem");
+            System.out.println("0 para encerrar o programa");
 
-            jogador[i] = new Jogador(nome,nivel);
-            jogadorDB.insertJogador(jogador[i]);
-
-            System.out.println("Inserir novo jogador?");
             aux = u.nextInt();
+
+            if(aux == 1) {
+                System.out.println("Criando seu personagem");
+                System.out.println("Insira o nick :");
+                String nome = u.next();
+
+                System.out.println("Insira sua TAG (a tag deve possuir 4 numeros.Ex = 1234)");
+                int tag = u.nextInt();
+
+                //criando o objeto jogador
+                jogador[i] = new Jogador(nome, tag);
+                //colocando ele no banco de dados
+                jogadorDB.insertJogador(jogador[i]);
+
+                System.out.println("Insira a senha do seu cofre: ");
+                String senha = u.next();
+                //criando o cofre dele
+                cofre[i] = new Cofre(capacidade,senha,jogador[i].id);
+                cofreDB.insertCofre(cofre[i]);
+            }
+
+
         }while (aux != 0);
+
+
+
+        jogadorDB.researchJogador();
+    }
+}
+
+
 /*
         //objetos para inserir no BD
         Jogador j1 = new Jogador("PVF",20);
@@ -61,7 +90,3 @@ public class Principal {
         jogadorDB.researchJogador();
         cofreDB.researchCofre();
 */
-
-        jogadorDB.researchJogador();
-    }
-}
