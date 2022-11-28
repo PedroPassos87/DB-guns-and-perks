@@ -11,18 +11,17 @@ public class CofreDB extends Database {
     //inserindo
     public boolean insertCofre(Cofre cofre){
         connect();
-        String sql = "INSERT INTO cofre(capacidade,senha,jogador_id) VALUES (?,?,?)";
+        String sql = "INSERT INTO cofre(capacidade,senha) VALUES (?,?)";
         try{
 
             pst = connection.prepareStatement(sql);
             pst.setInt(1,cofre.capacidade);
             pst.setString(2, cofre.getSenha());
-            pst.setInt(3,cofre.jogador_id);
             pst.execute();
             check = true;
 
         }catch (SQLException e){
-            System.out.println("Erro de operação: "+e.getMessage());
+            System.out.println("Erro de operação : "+e.getMessage());
             check = false;
         }
         finally {
@@ -49,14 +48,16 @@ public class CofreDB extends Database {
             result = statement.executeQuery(sql);
 
             while (result.next()){
-                Cofre cofreTemp = new Cofre(result.getString("senha"),result.getInt("jogador_id"));
+                Cofre cofreTemp = new Cofre(result.getString("senha"),result.getInt("capacidade"));
                 cofreTemp.id = result.getInt("id");
-
-
+                cofreTemp.jogador_id = result.getInt("jogador_id");
                 System.out.println("Numero do cofre = "+ cofreTemp.id);
                 System.out.println("Capacidade = "+ cofreTemp.capacidade);
-                System.out.println("Senha = "+cofreTemp.getSenha());
-
+                System.out.println("Senha = "+cofreTemp.senha);
+                if(cofreTemp.jogador_id > 0){
+                    System.out.println("Id do dono: "+ cofreTemp.jogador_id);
+                }
+                System.out.println("--------------------------------------------------------");
                 cofres.add(cofreTemp);
             }
         }catch (SQLException e){
@@ -75,8 +76,8 @@ public class CofreDB extends Database {
 
     }
 
-    //atualizando registro
-    public boolean updateCofre(int id, int jogador_id){
+    //registros criados sem relacionamentos, aqui estamos criando relacionamento ja existentes
+    public boolean updateJogador_id(int id, int jogador_id){
         connect();
         String sql = "UPDATE cofre SET jogador_id=? where id=?";
         try {

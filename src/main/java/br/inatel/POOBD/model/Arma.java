@@ -8,7 +8,7 @@ public class Arma {
     public String tipoMunicao;
     public int ammocapacity;
 
-    public int perk_id;
+
 
     public Arma(int id,String nome,String tipoArma,String tipoMunicao,int ammocapacity){
         this.id = id;

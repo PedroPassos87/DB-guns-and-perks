@@ -48,11 +48,16 @@ public class Principal {
                 //colocando ele no banco de dados
                 jogadorDB.insertJogador(jogador[i]);
 
+
                 System.out.println("Insira a senha do seu cofre: ");
-                String senha = u.next();
+                String password = u.next();
+
                 //criando o cofre dele
-                cofre[i] = new Cofre(senha,jogador[i].id);
+                cofre[i] = new Cofre(password,5);
                 cofreDB.insertCofre(cofre[i]);
+                //relacionando cofre com dono
+                cofreDB.updateJogador_id(cofre[i].id,jogador[i].id);
+
             }
 
             else if(aux == 2){
@@ -65,12 +70,14 @@ public class Principal {
                 armaDB.researchArma();
 
                 //usuario escolhe armas
-                int escolha = u.nextInt();
+
 
                 //tratar o erro da escolha. Ser diferente de um id de arma
 
 
                 //colocar a arma no cofre do usuario
+
+
 
 
             }

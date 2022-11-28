@@ -2,13 +2,14 @@ package br.inatel.POOBD.model;
 
 public class Cofre {
     public int id;
-    public int capacidade = 5;
-    private String senha;
+    public int capacidade;
+    public String senha;
     public int jogador_id ;
 
-    public Cofre(String senha,int jogador_id){
+    public Cofre(String senha,int capacidade){
         this.senha = senha;
-        this.jogador_id = jogador_id;
+
+        this.capacidade = capacidade;
     }
 
 
