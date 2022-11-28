@@ -45,15 +45,13 @@ public class JogadorDB extends Database{
         try {
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
-
+            System.out.println("Nicks : ");
             while (result.next()){
                 Jogador jogadorTemp = new Jogador(result.getString("nick"),result.getInt("tag"));
                 jogadorTemp.id = result.getInt("id");
 
-                System.out.println("ID = "+ jogadorTemp.id);
-                System.out.println("Nick = "+jogadorTemp.nick);
-                System.out.println("Nivel = "+jogadorTemp.tag);
-                System.out.println("---------------------------------------");
+
+                System.out.println(("-"+jogadorTemp.nick));
                 jogadores.add(jogadorTemp);
             }
         }catch (SQLException e){

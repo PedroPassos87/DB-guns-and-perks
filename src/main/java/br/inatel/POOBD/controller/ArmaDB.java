@@ -14,11 +14,16 @@ public class ArmaDB extends Database{
     //armas serao pré criadas e mostradas ao usuario. Ele escolherá por id e
     public boolean insertArma(Arma arma){
         connect();
-        String sql = "INSERT INTO arma(cofre_id) VALUES (?)";
+        String sql = "INSERT INTO arma(id,nome,tipoArma,tipoMunicao,ammocapacity) VALUES (?,?,?,?,?)";
         try{
 
             pst = connection.prepareStatement(sql);
-            pst.setInt(1,arma.cofre_id);
+            pst.setInt(1,arma.id);
+            pst.setString(2, arma.nome);
+            pst.setString(3,arma.tipoArma);
+            pst.setString(4,arma.tipoMunicao);
+            pst.setInt(5,arma.ammocapacity);
+            pst.setInt(6,arma.cofre_id);
             pst.execute();
             check = true;
 
@@ -51,8 +56,7 @@ public class ArmaDB extends Database{
                 Arma armaTemp = new Arma(result.getInt("id"),result.getString("nome"),
                         result.getString("tipoArma"),result.getString("tipoMunicao"),
                         result.getInt("ammocapacity"));
-
-
+                armaTemp.cofre_id = result.getInt("cofre_id");
                 System.out.println("Arma = "+armaTemp.nome);
                 System.out.println("Numero da arma = "+ armaTemp.id);
                 System.out.println("Tipo = "+armaTemp.tipoArma);
@@ -78,12 +82,12 @@ public class ArmaDB extends Database{
     }
 
     //atualizando registro
-    public boolean updateArma(int id, String nome){
+    public boolean updatecofre_id(int id, String senha){
         connect();
-        String sql = "UPDATE arma SET nome=? where id=?";
+        String sql = "UPDATE arma SET cofre_id=? where id=?";
         try {
             pst = connection.prepareStatement(sql);
-            pst.setString(1,nome);
+            pst.setString(1,senha);
             pst.setInt(2,id);
             pst.execute();
             check = true;

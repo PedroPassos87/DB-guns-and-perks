@@ -27,12 +27,14 @@ public class Principal {
 
         do {
 
+            System.out.println("-------------------------------------------------------");
             System.out.println("1 para cadastrar seu personagem");
             System.out.println("2 para adicionar arma ao seu personagem/cofre");
             System.out.println("3 para mudar seu nick");
             System.out.println("4 para deletar um personagem");
+            System.out.println("5 para mostrar os jogadores cadastrados");
             System.out.println("0 para encerrar o programa");
-
+            System.out.println("-------------------------------------------------------");
             aux = u.nextInt();
 
             if(aux == 1) {
@@ -55,6 +57,7 @@ public class Principal {
                 //criando o cofre dele
                 cofre[i] = new Cofre(password,5);
                 cofreDB.insertCofre(cofre[i]);
+
                 //relacionando cofre com dono
                 cofreDB.updateJogador_id(cofre[i].id,jogador[i].id);
 
@@ -67,10 +70,12 @@ public class Principal {
                 //validando senha
 
                 //mostrar armas
+                System.out.println("Escolha sua arma pelo id");
+                System.out.println("---------------------------------------");
                 armaDB.researchArma();
 
                 //usuario escolhe armas
-
+                int escolha = u.nextInt();
 
                 //tratar o erro da escolha. Ser diferente de um id de arma
 
@@ -80,21 +85,54 @@ public class Principal {
 
 
 
-            }
-
-            else if(aux == 3){
-                //mudar nick
-
 
             }
 
-            else if(aux == 4){
+            else if(aux == 3){ //FALTA TRATAR ERRO DA TAG
+
+                    //mudar nick
+                    System.out.println("Insira sua TAG para confirmarmos o usuario: ");
+                    int tagop = u.nextInt();
+                    //tratar de ser uma tag existente
+
+                    //inserir o novo nick
+                    System.out.println("Insira seu novo nick :");
+                    String newnick = u.next();
+
+                    //chamando a funçao
+                    boolean change = jogadorDB.updateJogador(newnick,tagop);
+                    if(change == true){
+                        System.out.println("NICK alterado para : "+ newnick);
+                    }
+                    else if(change == false){
+                        System.out.println("erro ao tentar trocar seu nick");
+                    }
+            }
+
+            else if(aux == 4){ //FUNCIONANDO
                 //deletar personagem
 
-            }
+                //confirmar se o usuario realmente deseja excluir sua conta
+                System.err.println("Esta acao nao podera ser desfeita. Realmente deseja realizar essa operacao?");
+                System.err.println("1 para sim, 0 para nao");
+                int op = u.nextInt();
+                if(op == 1){
+                    System.out.println("Insira sua TAG para confirmarmos o usuario: ");
+                    int tagdel = u.nextInt();
 
-            else{
+                    //deletando
+                    jogadorDB.deleteJogador(tagdel);
+                }
+
+            } else if (aux == 5) {
+                //mostrando o nick dos jogadores cadastrados
+                jogadorDB.researchJogador();
+
+            } else{//FUNCIONANDO
+
                 //chamar erro
+                if (aux != 0) //diferente de 0 pois 0 encerrar o processo por completo
+                System.err.println("Nenhuma operacao valida. Tente novamente");
             }
 
 

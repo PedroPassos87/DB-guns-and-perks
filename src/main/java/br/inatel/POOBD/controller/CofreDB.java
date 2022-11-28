@@ -36,50 +36,10 @@ public class CofreDB extends Database {
         return check;
     }
 
-
-    //selecionando
-    public ArrayList<Cofre> researchCofre(){
-        connect();
-        ArrayList<Cofre> cofres = new ArrayList<>();
-        String sql = "SELECT * FROM cofre";
-
-        try {
-            statement = connection.createStatement();
-            result = statement.executeQuery(sql);
-
-            while (result.next()){
-                Cofre cofreTemp = new Cofre(result.getString("senha"),result.getInt("capacidade"));
-                cofreTemp.id = result.getInt("id");
-                cofreTemp.jogador_id = result.getInt("jogador_id");
-                System.out.println("Numero do cofre = "+ cofreTemp.id);
-                System.out.println("Capacidade = "+ cofreTemp.capacidade);
-                System.out.println("Senha = "+cofreTemp.senha);
-                if(cofreTemp.jogador_id > 0){
-                    System.out.println("Id do dono: "+ cofreTemp.jogador_id);
-                }
-                System.out.println("--------------------------------------------------------");
-                cofres.add(cofreTemp);
-            }
-        }catch (SQLException e){
-            System.out.println("Erro de operacao: "+e.getMessage());
-        }finally {
-            try {
-                connection.close();
-                statement.close();
-                result.close();
-            }catch (SQLException e){
-                System.out.println("Erro ao fechar a conexão: "+e.getMessage());
-            }
-        }
-
-        return cofres;
-
-    }
-
     //registros criados sem relacionamentos, aqui estamos criando relacionamento ja existentes
     public boolean updateJogador_id(int id, int jogador_id){
         connect();
-        String sql = "UPDATE cofre SET jogador_id=? where id=?";
+        String sql = "UPDATE cofre SET jogador_id = ? where id = ? ";
         try {
             pst = connection.prepareStatement(sql);
             pst.setInt(1,jogador_id);
@@ -98,28 +58,6 @@ public class CofreDB extends Database {
             }
         }
 
-        return check;
-    }
-
-    public boolean deleteCofre(int id){
-        connect();
-        String sql = "DELETE FROM cofre WHERE id=?";
-        try {
-            pst = connection.prepareStatement(sql);
-            pst.setInt(1,id);
-            pst.execute();
-            check = true;
-        }catch (SQLException e){
-            System.out.println("Erro de operacao: "+e.getMessage());
-            check = false;
-        }finally {
-            try {
-                connection.close();
-                pst.close();
-            }catch (SQLException e){
-                System.out.println("Erro ao fechar a conexao: "+ e.getMessage());
-            }
-        }
         return check;
     }
 
