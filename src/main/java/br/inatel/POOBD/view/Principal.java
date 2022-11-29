@@ -16,14 +16,14 @@ public class Principal {
         CofreDB cofreDB = new CofreDB();
         ArmaDB armaDB = new ArmaDB();
 
-        Jogador [] jogador = new Jogador[5];
-        Cofre [] cofre= new Cofre[5];
+        Jogador [] jogador = new Jogador[100];
+        Cofre [] cofre= new Cofre[100];
 
 
         int aux;
         Scanner u = new Scanner(System.in);
-        int i = 0;
-        int capacidade = 5;
+        int i = 1;
+
 
         do {
 
@@ -37,7 +37,7 @@ public class Principal {
             System.out.println("-------------------------------------------------------");
             aux = u.nextInt();
 
-            if(aux == 1) {
+            if(aux == 1) {//falta relacionar a chave estrangeira com o id do jogador
                 System.out.println("Criando seu personagem");
                 System.out.println("Insira o nick :");
                 String nome = u.next();
@@ -50,7 +50,6 @@ public class Principal {
                 //colocando ele no banco de dados
                 jogadorDB.insertJogador(jogador[i]);
 
-
                 System.out.println("Insira a senha do seu cofre: ");
                 String password = u.next();
 
@@ -58,8 +57,8 @@ public class Principal {
                 cofre[i] = new Cofre(password,5);
                 cofreDB.insertCofre(cofre[i]);
 
-                //relacionando cofre com dono
-                cofreDB.updateJogador_id(cofre[i].id,jogador[i].id);
+
+
 
             }
 
@@ -83,33 +82,32 @@ public class Principal {
                 //colocar a arma no cofre do usuario
 
 
-
-
-
             }
 
             else if(aux == 3){ //FALTA TRATAR ERRO DA TAG
 
-                    //mudar nick
-                    System.out.println("Insira sua TAG para confirmarmos o usuario: ");
-                    int tagop = u.nextInt();
-                    //tratar de ser uma tag existente
+                //mudar nick
+                System.out.println("Insira sua TAG para confirmarmos o usuario: ");
+                int tagop = u.nextInt();
+                //tratar de ser uma tag existente
 
-                    //inserir o novo nick
-                    System.out.println("Insira seu novo nick :");
-                    String newnick = u.next();
+                //inserir o novo nick
+                System.out.println("Insira seu novo nick :");
+                String newnick = u.next();
 
-                    //chamando a funçao
-                    boolean change = jogadorDB.updateJogador(newnick,tagop);
-                    if(change == true){
-                        System.out.println("NICK alterado para : "+ newnick);
-                    }
-                    else if(change == false){
-                        System.out.println("erro ao tentar trocar seu nick");
-                    }
+                //chamando a funçao
+                boolean change = jogadorDB.updateJogador(newnick,tagop);
+                if(change == true){
+                    System.out.println("NICK alterado para : "+ newnick);
+                }
+                else if(change == false){
+                    System.out.println("erro ao tentar trocar seu nick");
+                }
             }
 
-            else if(aux == 4){ //FUNCIONANDO
+
+           //FUNCIONANDO
+            else if(aux == 4){
                 //deletar personagem
 
                 //confirmar se o usuario realmente deseja excluir sua conta
@@ -124,15 +122,21 @@ public class Principal {
                     jogadorDB.deleteJogador(tagdel);
                 }
 
-            } else if (aux == 5) {
+
+            }
+
+            //FUNCIONANDO
+            else if (aux == 5) {
                 //mostrando o nick dos jogadores cadastrados
                 jogadorDB.researchJogador();
 
-            } else{//FUNCIONANDO
+            }
 
+            //FUNCIONANDO
+            else{
                 //chamar erro
                 if (aux != 0) //diferente de 0 pois 0 encerrar o processo por completo
-                System.err.println("Nenhuma operacao valida. Tente novamente");
+                   System.err.println("Nenhuma operacao valida. Tente novamente");
             }
 
 
@@ -142,34 +146,3 @@ public class Principal {
 
     }
 }
-
-
-/*
-        //objetos para inserir no BD
-        Jogador j1 = new Jogador("PVF",20);
-        Jogador j2 = new Jogador("W&N",5);
-        Cofre c1 = new Cofre(10,"wiou",1);
-        Cofre c2 = new Cofre(12,"qwer",2);
-
-        //inserindo infos no BD
-        jogadorDB.insertJogador(j1);
-        jogadorDB.insertJogador(j2);
-        cofreDB.insertCofre(c1);
-        cofreDB.insertCofre(c2);
-
-        //buscando info bd
-        jogadorDB.researchJogador();
-        cofreDB.researchCofre();
-        System.out.println("--------ATUALIZANDO INFOS BD--------");
-        jogadorDB.updateJogador(2,"Weslwy",4);
-        jogadorDB.researchJogador();
-        cofreDB.updateCofre(1,1);
-        cofreDB.researchCofre();
-        System.out.println("-------Excluindo infos BD----------");
-        jogadorDB.deleteJogador(1);
-        cofreDB.deleteCofre(2);
-
-        //mostrandp resultado final BD
-        jogadorDB.researchJogador();
-        cofreDB.researchCofre();
-*/

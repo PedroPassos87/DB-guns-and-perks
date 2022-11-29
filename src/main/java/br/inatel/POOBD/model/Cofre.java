@@ -8,8 +8,8 @@ public class Cofre {
 
     public Cofre(String senha,int capacidade){
         this.senha = senha;
-
         this.capacidade = capacidade;
+
     }
 
 
