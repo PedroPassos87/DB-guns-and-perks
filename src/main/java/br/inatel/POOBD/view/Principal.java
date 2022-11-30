@@ -56,6 +56,7 @@ public class Principal {
                 //criando o cofre dele
                 cofre[i] = new Cofre(password,5);
                 cofreDB.insertCofre(cofre[i]);
+                cofreDB.att();
 
 
 

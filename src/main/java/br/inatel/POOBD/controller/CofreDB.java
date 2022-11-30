@@ -38,14 +38,12 @@ public class CofreDB extends Database {
         return check;
     }
 
-    public boolean att( String password, Jogador jogador){
+    public boolean att( ){
         connect();
-        String sql = "UPDATE cofre set jogador_id = ? where senha = ?";
+        String sql = "UPDATE cofre set jogador_id = id";
         try{
 
             pst = connection.prepareStatement(sql);
-            pst.setInt(1,jogador.id);
-            pst.setString(2, password);
             pst.execute();
             check = true;
 

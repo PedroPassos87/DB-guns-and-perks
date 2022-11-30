@@ -68,6 +68,8 @@ public class JogadorDB extends Database{
         return jogadores;
     }
 
+
+
     //atualizando registro
     public boolean updateJogador(String nick,int tag){
         connect();
