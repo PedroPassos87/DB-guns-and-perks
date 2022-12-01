@@ -10,32 +10,18 @@ public class CofreDB extends Database {
     private boolean check = false;
 
     //inserindo
-    public boolean insertCofre(Cofre cofre){
+    public void insertCofre(Cofre cofre) throws SQLException{
         connect();
         String sql = "INSERT INTO cofre(capacidade,senha) VALUES (?,?)";
-        try{
+
 
             pst = connection.prepareStatement(sql);
             pst.setInt(1,cofre.capacidade);
             pst.setString(2, cofre.getSenha());
             pst.execute();
-            check = true;
+            connection.close();
+            pst.close();
 
-        }catch (SQLException e){
-            System.out.println("Erro de operação : "+e.getMessage());
-            check = false;
-        }
-        finally {
-            try {
-                connection.close();
-                pst.close();
-            }catch (SQLException e){
-                System.out.println("Erro ao fechar a conexão: "+ e.getMessage());
-            }
-        }
-
-
-        return check;
     }
 
     public boolean att( ){

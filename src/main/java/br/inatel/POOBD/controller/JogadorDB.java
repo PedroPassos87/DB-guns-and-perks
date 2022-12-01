@@ -115,6 +115,8 @@ public class JogadorDB extends Database{
             }catch (SQLException e){
                 System.out.println("Erro ao fechar a conexao: "+ e.getMessage());
             }
+
+
         }
         return check;
     }

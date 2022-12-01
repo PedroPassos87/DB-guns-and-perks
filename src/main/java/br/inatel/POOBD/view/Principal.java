@@ -6,6 +6,7 @@ import br.inatel.POOBD.controller.JogadorDB;
 import br.inatel.POOBD.model.Cofre;
 import br.inatel.POOBD.model.Jogador;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Principal {
@@ -37,7 +38,7 @@ public class Principal {
             System.out.println("-------------------------------------------------------");
             aux = u.nextInt();
 
-            if(aux == 1) {//falta relacionar a chave estrangeira com o id do jogador
+            if(aux == 1) {//FUNCIONANDO
                 System.out.println("Criando seu personagem");
                 System.out.println("Insira o nick :");
                 String nome = u.next();
@@ -50,17 +51,23 @@ public class Principal {
                 //colocando ele no banco de dados
                 jogadorDB.insertJogador(jogador[i]);
 
-                System.out.println("Insira a senha do seu cofre: ");
-                String password = u.next();
+
 
                 //criando o cofre dele
-                cofre[i] = new Cofre(password,5);
-                cofreDB.insertCofre(cofre[i]);
+                    System.out.println("Insira a senha do seu cofre: ");
+                    String password = u.next();
+
+                    try {
+                        cofre[i] = new Cofre(password,5);
+                        cofreDB.insertCofre(cofre[i]);
+
+                    }catch (SQLException e){
+                        System.err.println("ESSA SENHA JA EXISTE, crie seu perfil novamente");
+                        jogadorDB.deleteJogador(tag);
+                    }
+
+                //atualizando a chave estrangeira do cofre
                 cofreDB.att();
-
-
-
-
             }
 
             else if(aux == 2){
@@ -121,6 +128,7 @@ public class Principal {
 
                     //deletando
                     jogadorDB.deleteJogador(tagdel);
+                    System.out.println("Usuario deletado");
                 }
 
 
