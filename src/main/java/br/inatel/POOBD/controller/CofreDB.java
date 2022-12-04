@@ -1,7 +1,7 @@
 package br.inatel.POOBD.controller;
 
+
 import br.inatel.POOBD.model.Cofre;
-import br.inatel.POOBD.model.Jogador;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -116,4 +116,31 @@ public class CofreDB extends Database {
         return check;
     }
 
+    public boolean colocaArma(int id, String senha){
+        connect();
+        String sql = "UPDATE cofre set arma_id = ? where senha = ?";
+        try{
+
+            pst = connection.prepareStatement(sql);
+            pst.setInt(1,id);
+            pst.setString(2, senha);
+            pst.execute();
+            check = true;
+
+        }catch (SQLException e){
+            System.out.println("Erro de operação: "+e.getMessage());
+            check = false;
+        }
+        finally {
+            try {
+                connection.close();
+                pst.close();
+            }catch (SQLException e){
+                System.out.println("Erro ao fechar a conexão: "+ e.getMessage());
+            }
+        }
+        return check;
+    }
+
 }
+
