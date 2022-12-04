@@ -1,7 +1,7 @@
 package br.inatel.POOBD.controller;
 
 import br.inatel.POOBD.model.Arma;
-import br.inatel.POOBD.model.Cofre;
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class ArmaDB extends Database{
                 Arma armaTemp = new Arma(result.getInt("id"),result.getString("nome"),
                         result.getString("tipoArma"),result.getString("tipoMunicao"),
                         result.getInt("ammocapacity"));
-                armaTemp.cofre_id = result.getInt("cofre_id");
+
                 System.out.println("Arma = "+armaTemp.nome);
                 System.out.println("Numero da arma = "+ armaTemp.id);
                 System.out.println("Tipo = "+armaTemp.tipoArma);
@@ -81,50 +81,39 @@ public class ArmaDB extends Database{
 
     }
 
-    //atualizando registro
-    public boolean updatecofre_id(int id, String senha){
+
+
+    public int contador(){
         connect();
-        String sql = "UPDATE arma SET cofre_id=? where id=?";
+        ArrayList<Arma> armas = new ArrayList<>();
+        String sql = "SELECT * FROM arma";
+
         try {
-            pst = connection.prepareStatement(sql);
-            pst.setString(1,senha);
-            pst.setInt(2,id);
-            pst.execute();
-            check = true;
-        }catch (SQLException e){
-            System.out.println("Erro de operacao: "+ e.getMessage());
-            check = false;
-        }finally {
-            try {
-                connection.close();
-                pst.close();
-            }catch (SQLException e){
-                System.out.println("Erro ao fechar a conexao: "+e.getMessage());
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+
+            while (result.next()){
+                Arma armaTemp = new Arma(result.getInt("id"),result.getString("nome"),
+                        result.getString("tipoArma"),result.getString("tipoMunicao"),
+                        result.getInt("ammocapacity"));
+                armas.add(armaTemp);
+
+
             }
-        }
-
-        return check;
-    }
-
-    public boolean deleteArma(int id){
-        connect();
-        String sql = "DELETE FROM arma WHERE id=?";
-        try {
-            pst = connection.prepareStatement(sql);
-            pst.setInt(1,id);
-            pst.execute();
-            check = true;
         }catch (SQLException e){
             System.out.println("Erro de operacao: "+e.getMessage());
-            check = false;
         }finally {
             try {
                 connection.close();
-                pst.close();
+                statement.close();
+                result.close();
             }catch (SQLException e){
-                System.out.println("Erro ao fechar a conexao: "+ e.getMessage());
+                System.out.println("Erro ao fechar a conexão: "+e.getMessage());
             }
         }
-        return check;
+
+         return armas.size();
     }
+
+
 }
