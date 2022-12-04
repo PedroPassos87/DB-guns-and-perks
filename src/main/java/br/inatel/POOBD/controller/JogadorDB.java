@@ -1,6 +1,6 @@
 package br.inatel.POOBD.controller;
 
-import br.inatel.POOBD.model.Cofre;
+
 import br.inatel.POOBD.model.Jogador;
 
 import java.sql.SQLException;
