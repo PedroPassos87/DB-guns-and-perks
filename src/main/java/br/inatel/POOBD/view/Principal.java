@@ -1,3 +1,7 @@
+/**
+ * @author = Pedro Henrique Passos Carreira and João Pedro Maciel de Souza
+ * @version 1.0.4
+ */
 package br.inatel.POOBD.view;
 
 import br.inatel.POOBD.controller.ArmaDB;
@@ -16,7 +20,6 @@ public class Principal {
         JogadorDB jogadorDB = new JogadorDB();
         CofreDB cofreDB = new CofreDB();
         ArmaDB armaDB = new ArmaDB();
-
         Jogador [] jogador = new Jogador[100];
         Cofre [] cofre= new Cofre[100];
 
@@ -43,14 +46,13 @@ public class Principal {
                 System.out.println("Insira o nick :");
                 String nome = u.next();
 
-                System.out.println("Insira sua TAG (a tag deve possuir 4 numeros.Ex = 1234)");
+                System.out.println("Insira sua TAG (somente numeros)");
                 int tag = u.nextInt();
 
                 //criando o objeto jogador
                 jogador[i] = new Jogador(nome, tag);
                 //colocando ele no banco de dados
                 jogadorDB.insertJogador(jogador[i]);
-
 
 
                 //criando o cofre dele
@@ -72,12 +74,13 @@ public class Principal {
 
             else if(aux == 2){
                 //insira a senha do seu cofre
+                System.out.println("Insira a senha do seu cofre: ");
                 String valid = u.next();
 
-                //validando senha
+
 
                 //mostrar armas
-                System.out.println("Escolha sua arma pelo id");
+                System.out.println("Escolha sua arma principal pelo id");
                 System.out.println("---------------------------------------");
                 armaDB.researchArma();
 
@@ -85,14 +88,20 @@ public class Principal {
                 int escolha = u.nextInt();
 
                 //tratar o erro da escolha. Ser diferente de um id de arma
-
+                if(escolha > armaDB.contador() || escolha <=0){
+                    System.out.println("Essa arma nao existe.Tente novamente");
+                }
 
                 //colocar a arma no cofre do usuario
+                else{
+                    cofreDB.colocaArma(escolha,valid);
+                    System.out.println("Arma Principal adicionada!");
+                }
 
 
             }
 
-            else if(aux == 3){ //FALTA TRATAR ERRO DA TAG
+            else if(aux == 3){
 
                 //mudar nick
                 System.out.println("Insira sua TAG para confirmarmos o usuario: ");
@@ -114,7 +123,7 @@ public class Principal {
             }
 
 
-           //FUNCIONANDO
+
             else if(aux == 4){
                 //deletar personagem
 
@@ -134,7 +143,6 @@ public class Principal {
 
             }
 
-            //FUNCIONANDO
             else if (aux == 5) {
                 //mostrando o nick dos jogadores cadastrados
                 jogadorDB.researchJogador();
